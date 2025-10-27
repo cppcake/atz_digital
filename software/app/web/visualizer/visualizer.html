@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/web/visualizer/visualizer.css">
+  <link rel="stylesheet" href="/web/export/Font-Awesome-4.7.0/css/font-awesome.min.css">
+  <script type="module" src="/web/visualizer/visualizer.js"></script>
+  <script src="/web/visualizer/vis_style.js"></script>
+  {% if not debug %}
+  <script type="module" src="/web/visualizer/vis_events.js"></script>
+  {% else %}
+  <script type="module" src="/web/visualizer/debug.js"></script>
+  {% endif %}
+  <title>Visualizer</title>
+</head>
+
+<body>
+  <main class="stripes">
+
+    <div id="bg-upper">
+      <div id="bg-upper-content">
+
+        <div id="outer-topic-box" class="box">
+          <div id="topic-box" class="stripes inner-box">
+            <div class="pattern-bg"></div>
+            <span id="topic-title">Visualizer</span>
+            <div class="divider"></div>
+            <span id="topic-statement">Warten auf Therapiebeginn...</span>
+          </div>
+        </div>
+
+        <div id="outer-counter-box" class="box" style="display:none;">
+          <div id="counter-box" class="stripes inner-box">
+            <div class="pattern-bg"></div>
+            <span id="counter"></span>
+          </div>
+        </div>
+
+        <div id="answers"></div>
+
+        <div id="session-info">
+          <div class="outer-command box">
+            <div class="command inner-box stripes">
+              <p>Schritt 1:</p>
+              <p><small>Verbinden Sie sich mit dem Therapie W-LAN</small></p>
+
+              <div class="cmdiv"></div>
+
+              <p>Schritt 2:</p>
+              <p><small>Scannen Sie den QR-Code oder besuchen Sie die Seite http://digitale.therapie</small></p>
+            </div>
+          </div>
+          <div class="outer-wifi box">
+            <div class="wifi inner-box stripes">
+              <p>W-LAN</p>
+              <div>
+                <div class="tbox">
+                  <span class="tbox-name">Name / SSID</span>
+                  <span class="tbox-content" id="wifi-ssid">-</span>
+                </div>
+                <div class="tbox">
+                  <span class="tbox-name">Passwort</span>
+                  <span class="tbox-content" id="wifi-pass">-</span>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="outer-qr box">
+            <div class="qr inner-box">
+              <img src="/web/imgs/qr.png" id="qrcode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="bg-lower">
+      <div id="players"></div>
+    </div>
+
+  </main>
+</body>
+
+<template id="player-template">
+  <div class="outer-player box">
+    <div class="player">
+      <div class="player-icon inner-box"></div>
+      <div class="player-nameplate inner-box stripes">
+        <span class="player-name">Player</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="answer-template">
+  <div class="outer-answer box">
+    <img class="answer-badge" src="/web/imgs/buttons/green.svg" />
+    <div class="answer">
+      <div class="answer-text-box inner-box">
+        <span class="answer-text">This is a Question</span>
+      </div>
+      <span class="answer-image inner-box">?</span>
+      <div class="answer-droparea">
+        <div class="answer-placeholders">
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+          <div class="answer-placeholder"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+</html>

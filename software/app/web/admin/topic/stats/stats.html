@@ -1,0 +1,173 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<link rel="stylesheet" href="web/admin/sessions/sessions.css">
+<script src="/web/admin/topic/stats/stats.js"></script>
+<script src="/web/export/Chart.js.js"></script>
+<style>
+  .topic-container {
+    padding: 10 20px;
+    border: solid 2px #72253f;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .topic-container:hover {
+    background: var(--background-color);
+  }
+
+  .topic-list {
+    /* Die Liste "verstecken" sieht glaube ich besser aus */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .topic-list a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .topic-heading {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topic-title {
+    font-weight: bold;
+    font-size: 1em;
+  }
+
+  .topic-date {
+    font-style: italic;
+    color: #202020;
+  }
+
+  .topic-participants {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .player-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    gap: 4px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .player {
+    background: var(--accent_2-color);
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+
+  .sapcebetweendiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+<div class="section">
+  <h2> Statistiken - <a href="/topic/select/{{id}}">{{topic["content"]}}</a></h2>
+  {% if sessions|length == 0 %}
+  <p>Es wurden noch keine Therapien zu diesem Thema durchgeführt.</p>
+  {% else %}
+
+  <button class="button1" onclick="gotoUri('/topic/select/{{id}}')">Zurück</button>
+  <div class="section2">
+    <h3>Antwortmöglichkeiten</h3>
+    <ul id="ol_answers" style="list-style-type: none; padding-left: 0; text-align: left;">
+      {% set colors = ["green", "yellow", "red", "blue", "purple"] %}
+      {% set color_map = {"green": "#00AE42", "yellow": "#FEC600", "red": "#DE4343", "blue": "#00B1B7", "purple": "#950051"} %}
+      {% for color in colors %}
+        {% set answer = (topic.answers | selectattr("color", "equalto", color) | list | first) %}
+        {% if answer and answer.content %}
+        <li>
+          <div class="flexdiv">
+            <img src="/web/imgs/buttons/{{ color }}.svg" alt="{{ color }}" class="answer-icon-svg" />
+            <span class="color-circle" style="background: {{ color_map[color] }}"></span>
+            {% if answer.icon %}
+            <img src="/web/imgs/answers/{{ answer.icon }}.png" alt="{{ answer.icon }}" class="answer-icon-img"
+              style="height:32px;width:32px;object-fit:contain;aspect-ratio:1/1;margin-left:8px;">
+            {% endif %}
+            <span class="span1" id="{{ answer.color }}">{{ answer.content }}</span>
+          </div>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="section2">
+    <h3>Aussagen</h3>
+    <div class="statement-stats">
+      {% for statement in topic.statements %}
+      <div class="statement-block" style="margin-bottom: 2em;">
+        <h4>{{ loop.index }}. {{ statement.content }}</h4>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <div id="chart-container-{{ loop.index0 }}">
+            <canvas id="chart-statement-{{ loop.index0 }}" width="220" height="220" style="display:none;"></canvas>
+            <span class="no-data-msg" id="no-data-msg-{{ loop.index0 }}"
+              style="display:none; color: #888; font-size: 1.1em;">Keine Daten für diese Aussage vorhanden.</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="section2">
+    <h3>Verwendete Therapiesitzungen</h3>
+    <ul class="topic-list">
+      {% for fname in session_names[0] %}
+      {% set fname_noext = fname.split('.')[0] %}
+      {% set session_index = loop.index0 %}
+      {% if session_index < sessions|length %} {% set session=sessions[session_index] %} {% else %} {% set session=None
+        %} {% endif %} <a href="/sessions/{{fname_noext}}">
+        <li class="topic-container">
+          <div class="topic-heading">
+            <div class="sapcebetweendiv">
+              <span class="topic-title">
+                {% if topic %}{{topic.content}}{% else %}Therapiesitzung{% endif %}
+              </span>
+              <span class="topic-date">
+                {% if fname_noext|length >= 15 %}
+                {{fname_noext[6:8]}}.{{fname_noext[4:6]}}.{{fname_noext[0:4]}},
+                {{fname_noext[9:11]}}:{{fname_noext[11:13]}}
+                {% else %}
+                {{fname_noext}}
+                {% endif %}
+              </span>
+            </div>
+          </div>
+          <div class="topic-participants">
+            <ul class="player-list">
+              {% if session and session.players %}
+              {% for player in session.players %}
+              <li class="player">{{player.name}}</li>
+              {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
+        </li>
+        </a>
+        {% endfor %}
+    </ul>
+  </div>
+
+  {% endif %}
+  <button class="button1" onclick="gotoUri('/topic/select/{{id}}')">Zurück</button>
+</div>
+<script>
+  window.topic = {{ topic | tojson | safe }};
+  window.sessions = {{ sessions | tojson | safe }};
+  window.session_names = {{ session_names | tojson | safe }};
+</script>
+{% endblock %}

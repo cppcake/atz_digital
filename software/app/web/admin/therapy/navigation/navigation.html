@@ -1,0 +1,25 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<script src="/web/admin/therapy/navigation/navigation.js"></script>
+<div class="section">
+    <h2 id="topic_name"></h2>
+    <div class="section2">
+        <h3 id="current_statement"></h3>
+        <div class="flexdiv">
+            <button class="button1" onclick="backwardTherapy()"><i class="fa fa-arrow-left"></i></button>
+            <span id="counter" class="nowrap-span" style="min-width: 80px; text-align: center; display: inline-block;"></span>
+            <button class="button1" onclick="forwardTherapy()"><i class="fa fa-arrow-right"></i></button>
+        </div>
+        <!-- Statement navigation list -->
+        <div id="statement-list-container">
+            <ul id="statement-list"></ul>
+        </div>
+    </div>
+    <!-- Notes textarea styled like in notes.html -->
+    <div style="margin: 1em 0;">
+        <label for="therapy-notes" style="display:block; margin-bottom:8px;">Notizen: <small>(Optional)</small></label>
+        <textarea id="therapy-notes" class="therapy-notes-textarea" placeholder="Hier Notizen eingeben..."></textarea>
+    </div>
+    <button class="btn_create" onclick="endTherapy()">Therapie beenden</button>
+</div>
+{% endblock %}

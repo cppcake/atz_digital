@@ -1,0 +1,44 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<script src="/web/admin/therapy/prepare/prepare.js"></script>
+<div class="section">
+    <h2>{{ topic.content }}</h2>
+    <div class="section2">
+        <h3>Wie viele machen mit?</h3>
+        <p><small>Maximal 6 Personen möglich</small></p>
+        <select class="options" style="min-width: 40px; text-align: center; display: inline-block;" id="count">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+        </select>
+    </div>
+    <div class="section2">
+        <h3>Wer macht mit?</h3>
+        <p><small>Geben Sie den <b>Namen</b>, das <b>Bild</b> und die <b>Fernbedienungsnummer</b> der teilnehmenden Personen ein.</small></p>
+        <ul id="player_list">
+        </ul>
+    </div>
+    <div class="section2">
+        <h3>Optionen</h3>
+        <div style="margin-bottom: 10px;">
+            <label>
+                <input type="checkbox" id="delayed_answers">
+                Antworten verzögert anzeigen
+            </label>
+        </div>
+        <div class="hintbox hintbox-info">
+            <i class="fa fa-info-circle hintbox-icon"></i>
+            Mit dieser Option werden die Antworten erst dann angezeigt, sobald alle teilnehmenden Personen abgestimmt haben. Dies ist vor allem gegen Mitläufertum hilfreich und ggf. auch gegen Wettkampf „wer zuerst wählt, hat gewonnen“.
+        </div>
+    </div>
+    <div class="section2">
+        <h3>Fernbedienungen einschalten</h3>
+        <p><small>Denken Sie daran die genutzen Fernbedienungen einzuschalten</small></p>
+    </div>
+    <button class="btn_create" onclick="startTherapy('{{ topic.id }}', '{{ topic.version }}')">Therapie starten</button>
+    <button class="button1" onclick="gotoUriWAlert('/topic/select/{{topic.id}}', 'Therapie');">Abbrechen</button>
+</div>
+{% endblock %}

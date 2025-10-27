@@ -1,0 +1,63 @@
+.topic-container {
+  padding: 10 20px;
+  border: solid 2px #72253f;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.topic-container:hover {
+  background: var(--background-color);
+}
+
+.topic-list {
+  /* Die Liste "verstecken" sieht glaube ich besser aus */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+}
+
+.topic-heading {
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-title {
+  font-weight: bold;
+  font-size: 1em ;
+}
+
+.topic-date {
+  font-style: italic;
+  color: #202020;
+}
+
+.topic-participants {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.player {
+  background: var(--accent_2-color);
+  padding: 2px 5px;
+  border-radius: 5px;
+}

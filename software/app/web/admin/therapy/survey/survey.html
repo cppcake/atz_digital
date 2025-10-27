@@ -1,0 +1,108 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<script src="/web/admin/therapy/survey/survey.js"></script>
+<div class="section">
+    <h2>Umfrage</h2>
+
+    <div class="section2" id="required">
+        <p><b>Ich bitte um Teilnahme!</b></p>
+
+        <div style="margin-bottom: 24px;">
+            <p class="surveyp">Der Vorbereitungsaufwand der digitalen Therapie ist gering.</p>
+            <div class="sapcebetweendiv">
+                <p class="surveyp"><small>starke Ablehnung</small></p>
+                <p class="surveyp"><small>starke Zustimmung</small></p>
+            </div>
+            <div class="survey">
+                <label class="container">1
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">2
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">3
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">4
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <p class="surveyp">Die Nutzung der digitalen Therapie ist für mich einfach und intuitiv.</p>
+            <div class="sapcebetweendiv">
+                <p class="surveyp"><small>starke Ablehnung</small></p>
+                <p class="surveyp"><small>starke Zustimmung</small></p>
+            </div>
+            <div class="survey">
+                <label class="container">1
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">2
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">3
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">4
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <p class="surveyp">Die Klient:innen haben motiviert teilgenommen.</p>
+            <div class="sapcebetweendiv" >
+                <p class="surveyp"><small>starke Ablehnung</small></p>
+                <p class="surveyp"><small>starke Zustimmung</small></p>
+            </div>
+            <div class="survey">
+                <label class="container">1
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">2
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">3
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <label class="container">4
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            </dvi>
+        </div>
+    </div>
+
+    <div class="section2">
+        <div class="rowpadleft">
+            <p>Platz für weitere Anmerkungen und Feedback. <small>(Optional)</small></p>
+        </div>
+        <textarea class="studytext"></textarea>
+    </div>
+
+    <button class="btn_create" onclick="saveStudy()">Weiter </button>
+</div>
+{% endblock %}

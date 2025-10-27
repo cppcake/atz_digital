@@ -1,0 +1,71 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<script src="/web/admin/topic/put/put.js"></script>
+<script src="/web/admin/topic/put/create/create.js"></script>
+<div class="section">
+    <h2>Themenerstellung</h2>
+    <div class="section2">
+        <h3>Themenname</h3>
+        <input type="text" id="topic_name" placeholder="Themenname">
+    </div>
+    <div class="section2">
+        <h3>Aussagen</h3>
+        <ol id="ol_statements">
+            <li>
+                <div class="flexdiv">
+                    <input type="text" placeholder="Neue Aussage">
+                    <button class="btn_delete_small" onclick="window.removeItem(this)"><i class="fa fa-trash"></i>
+                </div>
+            </li>
+        </ol>
+        <button class="button1" onclick="addStatement()">Neue Aussage hinzufügen</button>
+    </div>
+    <div class="section2">
+        <h3>Antwortmöglichkeiten</h3>
+        <ul id="ol_answers" style="list-style-type: none; padding-left: 0;">
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/green.svg" alt="green" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-green)"></span>
+                    <button class="btn_small" id="img_select_green" onclick=""><i class="fa fa-image"></i></button>
+                    <input type="text" id="green" placeholder="Grüne Antwort">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/yellow.svg" alt="yellow" class="answer-icon-svg" />
+                    <span class="color-circle" style="background: var(--col-yellow)"></span>
+                    <button class="btn_small" id="img_select_yellow" onclick=""><i class="fa fa-image"></i></button>
+                    <input type="text" id="yellow" placeholder="Gelbe Antwort">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/red.svg" alt="red" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-red)"></span>
+                    <button class="btn_small" id="img_select_red" onclick=""><i class="fa fa-image"></i></button>
+                    <input type="text" id="red" placeholder="Rote Antwort">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/blue.svg" alt="blue" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-blue)"></span>
+                    <button class="btn_small" id="img_select_blue" onclick=""><i class="fa fa-image"></i></button>
+                    <input type="text" id="blue" placeholder="Blaue Antwort">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/purple.svg" alt="purple" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-purple)"></span>
+                    <button class="btn_small" id="img_select_purple" onclick=""><i class="fa fa-image"></i></button>
+                    <input type="text" id="purple" placeholder="Lila Antwort">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button class="btn_create" onclick="createTopic()">Thema erstellen</button>
+    <button class="button1" onclick="gotoUriWAlert('/topic/overview', 'Themenerstellung');">Abbrechen</button>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "admin/admin.html" %} {% block content %}
+<link rel="stylesheet" href="web/admin/sessions/sessions.css">
+<script src="/web/admin/sessions/details_content.js"></script>
+<script src="/web/admin/therapy/notes/notes.js"></script>
+<script src="/web/export/Chart.js.js"></script>
+<div class="section">
+    <div class="sapcebetweendiv">
+        <h2>{{ session_dict.topic.content}}</h2>
+    </div>
+
+    <span>Hier können Sie Notizen zu der Therapie notieren und weiter unten finden Sie eine Zusammenfassung der Therapie.</span>
+
+    <div style="margin: 1em 0;">
+        <label for="therapy-notes" style="display:block; margin-bottom:8px;">Notizen: <small>(Optional)</small></label>
+        <textarea id="therapy-notes" class="therapy-notes-textarea" placeholder="Hier Notizen eingeben...">{{ session_dict.notes if session_dict and session_dict.notes is defined else "" }}</textarea>
+    </div>
+
+    <button class="btn_create" id="btn_save_and_continue">Weiter</button>
+
+    {% include "admin/sessions/details_content.html" %}
+
+    {% endblock %}

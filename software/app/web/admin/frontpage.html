@@ -1,0 +1,21 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<script src="/web/admin/frontpage.js"></script>
+<div id="session_rejoin" style="display: none">
+  <div class="section">
+    <h2>Es läuft eine Therapie</h2>
+    <p><small>Es läuft bereits eine Therapie. Klicken Sie auf diesen Knopf, um zu ihr zurückzukehren.</small></p>
+    <button class="btn_create" onclick="gotoUri('/therapy/navigation')">Zur Therapie</button>
+  </div>
+</div>
+<div class="section">
+    <h1>Willkommen!</h1>
+
+    <button class="btn_create" onclick="gotoUri('/topic/overview')"> Themenübersicht </button>
+    <button class="button1" onclick="gotoUri('/sessions')">Vergangene Therapiesitzungen</button>
+</div>
+{% endblock %}
+
+<p><small>Bachelorprojekt von Afeef Neiroukh</small></p>
+<p><small>Entstanden in Zusammenarbeit mit dem Autismus-Therapie-Zentrum Bonn/Siegburg und mit großartiger Hilfe von
+        Rejk Böning, Niklas Steffen und Felix Boes</small></p>

@@ -1,0 +1,88 @@
+<div class="section2">
+    <h3>Teilnehmer:innen</h3>
+    <div class="topic-participants">
+        <!-- <span>Teilnehmer</span> -->
+        <ol id="ol_statements">
+            {% for player in session_dict["players"] %}
+            <li class="span1" ;>{{player["name"]}}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+
+<div class="section2">
+    <h3>Antwortmöglichkeiten</h3>
+    <ul id="ol_answers" style="list-style-type: none; padding-left: 0; text-align: left;">
+        <li>
+            <div class="flexdiv">
+                <img src="/web/imgs/buttons/green.svg" alt="green" class="answer-icon-svg" />
+                <span class="color-circle" style="background: var(--col-green)"></span>
+                <!-- icon will be inserted here by JS -->
+                <span class="span1" id="green"></span>
+            </div>
+        </li>
+        <li>
+            <div class="flexdiv">
+                <img src="/web/imgs/buttons/yellow.svg" alt="yellow" class="answer-icon-svg" />
+                <span class="color-circle" style="background: var(--col-yellow)"></span>
+                <!-- icon will be inserted here by JS -->
+                <span class="span1" id="yellow"></span>
+            </div>
+        </li>
+        <li>
+            <div class="flexdiv">
+                <img src="/web/imgs/buttons/red.svg" alt="red" class="answer-icon-svg" />
+                <span class="color-circle" style="background: var(--col-red)"></span>
+                <!-- icon will be inserted here by JS -->
+                <span class="span1" id="red"></span>
+            </div>
+        </li>
+        <li>
+            <div class="flexdiv">
+                <img src="/web/imgs/buttons/blue.svg" alt="blue" class="answer-icon-svg" />
+                <span class="color-circle" style="background: var(--col-blue)"></span>
+                <!-- icon will be inserted here by JS -->
+                <span class="span1" id="blue"></span>
+            </div>
+        </li>
+        <li>
+            <div class="flexdiv">
+                <img src="/web/imgs/buttons/purple.svg" alt="purple" class="answer-icon-svg" />
+                <span class="color-circle" style="background: var(--col-purple)"></span>
+                <!-- icon will be inserted here by JS -->
+                <span class="span1" id="purple"></span>
+            </div>
+        </li>
+        <li>
+            <div class="flexdiv" style="align-items: center;">
+                <span class="color-circle" style="background: #cccccc"></span>
+                <span class="span1" id="none">Keine Antwort</span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="section2">
+    <h3>Aussagen</h3>
+    <div class="statement-stats">
+        {% for statement in session_dict.topic.statements %}
+        <div class="statement-block" style="margin-bottom: 2em;">
+            <h4>{{ loop.index }}. {{ statement.content }}</h4>
+            <div style="display: flex; align-items: flex-start; gap: 32px;">
+                <div>
+                    <canvas id="chart-statement-{{ loop.index0 }}" width="220" height="220"></canvas>
+                </div>
+                <div>
+                    <ul class="player-votes" id="player-votes-{{ loop.index0 }}"
+                        style="list-style-type: none; padding-left: 0; margin: 0;">
+                        <!-- Filled by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    window.session_dict = {{ session_dict | tojson | safe }};
+</script>

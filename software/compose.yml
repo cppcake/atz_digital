@@ -1,0 +1,13 @@
+services:
+  atz_digital:
+    build: .
+    ports:
+      - "80:80"
+    privileged: true
+    restart: always
+    volumes:
+      - ./app/web/imgs:/repo/app/web/imgs
+      - ./app/sessions:/repo/app/sessions
+    # This section has been generated using GitHub CoPilot with GPT-4.1
+    environment:
+      - PYTHONUNBUFFERED=1

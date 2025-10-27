@@ -1,0 +1,23 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<script src="/web/admin/topic/overview/overview.js"></script>
+<div id="session_rejoin" style="display: none">
+  <div class="section">
+    <h2>Es läuft eine Therapie</h2>
+    <p><small>Es läuft bereits eine Therapie. Klicken Sie auf diesen Knopf, um zu ihr zurückzukehren.</small></p>
+    <button class="btn_create" onclick="gotoUri('/therapy/navigation')">Zur Therapie</button>
+  </div>
+</div>
+<div class="section">
+  <h2>Themenübersicht</h2>
+    <p><small>Wählen Sie ein Thema aus, um die Therapie zu beginnen.</small></p>
+    <h3>Themen</h3>
+    <ul class="list1" id="ul_topics">
+      {% for topic in topics %}
+      <li onclick="gotoUri('/topic/select/{{topic.id}}')">{{ topic.content }}</li>
+      {% endfor %}
+    </ul>
+    <button class="btn_create" onclick="gotoUri('/topic/create')">Neues Thema hinzufügen</button>
+    <button class="button1" onclick="gotoUri('/')">Zurück</button>
+  </div>
+{% endblock %}

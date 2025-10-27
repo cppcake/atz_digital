@@ -1,0 +1,36 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<link rel="stylesheet" href="web/admin/sessions/sessions.css">
+<div class="section">
+  <h2>Vergangene Therapien</h2>
+  {% if sessions|length == 0 %}
+  <p>Es wurden noch keine Therapien durchgeführt, deren Ergebnisse hier angezeigt werden können...</p>
+  {% else %}
+  <ul class="topic-list">
+    {% for session in sessions %}
+    <a href="sessions/{{session['date']['timestamp']}}">
+      <li class="topic-container">
+        <div class="topic-heading">
+          <div class="sapcebetweendiv">
+            <span class="topic-title">{{session["topic"]["content"]}}</span>
+            <span class="topic-date">
+            {{session["date"]["day"]}}.{{session["date"]["month"]}}.{{session["date"]["year"]}},
+            {{session["date"]["hour"]}}:{{session["date"]["min"]}}</span>
+          </div>
+        </div>
+        <div class="topic-participants">
+          <!-- <span>Teilnehmer</span> -->
+          <ul class="player-list">
+            {% for player in session["players"] %}
+            <li class="player">{{player["name"]}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <button class="button1" onclick="gotoUri('/')">Zurück</button>
+</div>
+{% endblock %}

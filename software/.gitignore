@@ -1,0 +1,8 @@
+*.db
+*.bkp
+__pycache__/
+.pytest_cache/
+app/sessions/*
+app/web/imgs/answers/*
+app/web/imgs/players/*
+tests/topics

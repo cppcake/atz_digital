@@ -1,0 +1,68 @@
+<!-- This file has been generated using GitHub CoPilot with GPT-4.1 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Remote Vote Debug</title>
+    <style>
+        .vote-btn {
+            width: 60px;
+            height: 40px;
+            margin: 5px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .green { background: #27ae60; }
+        .yellow { background: #f7ca18; color: #222; }
+        .red { background: #ff1900; }
+        .blue { background: #2980b9; }
+        .purple { background: #8e44ad; }
+    </style>
+</head>
+<body>
+    <h2>Remote Vote Debug</h2>
+    <label for="remote_number">Remote Nummer:</label>
+    <select id="remote_number">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+    </select>
+    <div style="margin-top: 20px;">
+        <button class="vote-btn green"   data-color="green">Grün</button>
+        <button class="vote-btn yellow"  data-color="yellow">Gelb</button>
+        <button class="vote-btn red"     data-color="red">Rot</button>
+        <button class="vote-btn blue"    data-color="blue">Blau</button>
+        <button class="vote-btn purple"  data-color="purple">Lila</button>
+    </div>
+    <div id="result" style="margin-top:20px;color:#333;"></div>
+    <script>
+        document.querySelectorAll('.vote-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const color = btn.getAttribute('data-color');
+                const number = document.getElementById('remote_number').value;
+                fetch(`/therapy/vote/${number}/${color}`, {
+                    method: 'PUT'
+                })
+                .then(res => res.json().catch(() => ({})))
+                .then(data => {
+                    document.getElementById('result').textContent =
+                        "Antwort: " + JSON.stringify(data);
+                })
+                .catch(err => {
+                    document.getElementById('result').textContent =
+                        "Fehler: " + err;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

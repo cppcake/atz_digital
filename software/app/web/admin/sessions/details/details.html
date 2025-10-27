@@ -1,0 +1,36 @@
+{% extends "admin/admin.html" %} {% block content %}
+<link rel="stylesheet" href="web/admin/sessions/sessions.css">
+<script src="/web/admin/sessions/details_content.js"></script>
+<script src="/web/admin/sessions/details/details.js"></script>
+<script src="/web/export/Chart.js.js"></script>
+<div class="section">
+    <div class="sapcebetweendiv">
+        <h2><a style="text-align: left;" href="/topic/select/{{ session_dict.topic.id}}">{{ session_dict.topic.content }}</a></h2>
+        <span class="topic-date">
+            {{session_dict["date"]["day"]}}.{{session_dict["date"]["month"]}}.{{session_dict["date"]["year"]}},
+            {{session_dict["date"]["hour"]}}:{{session_dict["date"]["min"]}}
+        </span>
+    </div>
+
+    <div>
+        <button class="btn_delete_small" id="btn_delete_session" style="margin-right: 16px;">
+            <i class="fa fa-trash"></i>
+    </button>
+
+    <button class="button1" onclick="gotoUri('/sessions')">Zurück</button>
+    </div>
+
+    <div class="section2">
+        <h3>Notizen</h3>
+        {% if session_dict.notes is defined and session_dict.notes|trim != '' %}
+        <div id="session-notes" style="white-space: pre-wrap; border: 1px solid #ddd; padding: 8px; border-radius: 4px;">{{ session_dict.notes }}</div>
+        {% else %}
+        <div id="session-notes" style="white-space: pre-wrap; border: 1px solid #ddd; padding: 8px; border-radius: 4px; color: #666;">Keine Notizen</div>
+        {% endif %}
+    </div>
+
+    {% include "admin/sessions/details_content.html" %}
+
+    <button class="button1" onclick="gotoUri('/sessions')">Zurück</button>
+</div>
+{% endblock %}

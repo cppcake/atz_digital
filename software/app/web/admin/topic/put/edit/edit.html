@@ -1,0 +1,113 @@
+{% extends "admin/admin.html" %} {% block content %}
+<script src="/web/admin/topic/put/put.js"></script>
+<script src="/web/admin/topic/put/edit/edit.js"></script>
+<div class="section">
+    <h2>Themabearbeitung</h2>
+    <p><small>Das Bearbeiten eines Themas erstellt eine Version dessen.</small></p>
+    <div class="section2">
+        <h3>Themenname</h3>
+        <input type="text" id="topic_name" placeholder="Themenname" value="{{content}}" />
+    </div>
+    <div class="section2">
+        <h3>Aussagen</h3>
+        <ol id="ol_statements">
+            {% for statement in statements %}
+            <li>
+                <div class="flexdiv">
+                    <input type="text" placeholder="Neue Aussage" value="{{statement.content}}" />
+                    <button class="btn_delete_small" onclick="window.removeItem(this)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+        <button class="button1" onclick="addStatement()">
+            Neue Aussage hinzufügen
+        </button>
+    </div>
+    <div class="section2">
+        <h3>Antwortmöglichkeiten</h3>
+        <ul id="ol_answers" style="list-style-type: none; padding-left: 0;">
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/green.svg" alt="green" class="answer-icon-svg" />
+                    <span class="color-circle" style="background: var(--col-green)"></span>
+                    <button class="btn_small" id="img_select_green" onclick="" {% if green_icon %}data-selected="{{green_icon}}"{% endif %}>
+                        {% if green_icon %}
+                            <img src="/web/imgs/answers/{{green_icon}}.png" alt="{{green_icon}}" class="image-menu-img-thumb">
+                        {% else %}
+                            <i class="fa fa-image"></i>
+                        {% endif %}
+                    </button>
+                    <input type="text" id="green" placeholder="Grüne Antwort" value="{{green}}">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/yellow.svg" alt="yellow" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-yellow)"></span>
+                    <button class="btn_small" id="img_select_yellow" onclick="" {% if yellow_icon %}data-selected="{{yellow_icon}}"{% endif %}>
+                        {% if yellow_icon %}
+                            <img src="/web/imgs/answers/{{yellow_icon}}.png" alt="{{yellow_icon}}" class="image-menu-img-thumb">
+                        {% else %}
+                            <i class="fa fa-image"></i>
+                        {% endif %}
+                    </button>
+                    <input type="text" id="yellow" placeholder="Gelbe Antwort" value="{{yellow}}">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/red.svg" alt="red" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-red)"></span>
+                    <button class="btn_small" id="img_select_red" onclick="" {% if red_icon %}data-selected="{{red_icon}}"{% endif %}>
+                        {% if red_icon %}
+                            <img src="/web/imgs/answers/{{red_icon}}.png" alt="{{red_icon}}" class="image-menu-img-thumb">
+                        {% else %}
+                            <i class="fa fa-image"></i>
+                        {% endif %}
+                    </button>
+                    <input type="text" id="red" placeholder="Rote Antwort" value="{{red}}">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/blue.svg" alt="blue" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-blue)"></span>
+                    <button class="btn_small" id="img_select_blue" onclick="" {% if blue_icon %}data-selected="{{blue_icon}}"{% endif %}>
+                        {% if blue_icon %}
+                            <img src="/web/imgs/answers/{{blue_icon}}.png" alt="{{blue_icon}}" class="image-menu-img-thumb">
+                        {% else %}
+                            <i class="fa fa-image"></i>
+                        {% endif %}
+                    </button>
+                    <input type="text" id="blue" placeholder="Blaue Antwort" value="{{blue}}">
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/purple.svg" alt="purple" class="answer-icon-svg" />
+                    <span class="color-circle" style="background:var(--col-purple)"></span>
+                    <button class="btn_small" id="img_select_purple" onclick="" {% if purple_icon %}data-selected="{{purple_icon}}"{% endif %}>
+                        {% if purple_icon %}
+                            <img src="/web/imgs/answers/{{purple_icon}}.png" alt="{{purple_icon}}" class="image-menu-img-thumb">
+                        {% else %}
+                            <i class="fa fa-image"></i>
+                        {% endif %}
+                    </button>
+                    <input type="text" id="purple" placeholder="Lila Antwort" value="{{purple}}">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button class="btn_create" onclick="updateTopic('{{id}}')">
+        Speichern
+    </button>
+    <button class="button1" onclick="gotoUriWAlert('/topic/select/{{id}}', 'Themenbearbeitung');">Abbrechen</button>
+</div>
+<script>
+    window.topic_id = "{{id}}";
+    window.topic_version = "{{version}}";
+</script>
+{% endblock %}

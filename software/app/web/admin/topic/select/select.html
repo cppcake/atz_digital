@@ -1,0 +1,73 @@
+{% extends "admin/admin.html" %} {% block content %}
+<script src="/web/admin/topic/select/select.js"></script>
+<div class="section">
+    <div class="sapcebetweendiv">
+        <div class="flexdiv">
+            <h2 id="topic_name"></h2>
+        </div>
+        <div class="flexdiv">
+            <button class="btn_delete_small" id="delete_btn" onclick="ignoreTopic()">
+                <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn_small" id="edit_btn">
+                <i class="fa fa-edit"></i>
+            </button>
+            <select class="options" style="display: none;" id="versions"></select>
+        </div>
+    </div>
+    <button class="btn_create" id="start_btn">
+        Therapie starten
+    </button>
+    <button class="button1" onclick="gotoUri('/topic/stats/{{id}}');">Statistiken</button>
+    <div class="section2">
+        <h3>Aussagen</h3>
+        <ol id="ol_statements"></ol>
+    </div>
+    <div class="section2">
+        <h3>Antwortmöglichkeiten</h3>
+        <ul id="ol_answers" style="list-style-type: none; padding-left: 0;">
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/green.svg" alt="green" class="answer-icon-svg" />
+                    <span class="color-square" style="background: var(--col-green)"></span>
+                    <span class="span1" id="green"></span>
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/yellow.svg" alt="yellow" class="answer-icon-svg" />
+                    <span class="color-square" style="background: var(--col-yellow)"></span>
+                    <span class="span1" id="yellow"></span>
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/red.svg" alt="red" class="answer-icon-svg" />
+                    <span class="color-square" style="background: var(--col-red)"></span>
+                    <span class="span1" id="red"></span>
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/blue.svg" alt="blue" class="answer-icon-svg" />
+                    <span class="color-square" style="background: var(--col-blue)"></span>
+                    <span class="span1" id="blue"></span>
+                </div>
+            </li>
+            <li>
+                <div class="flexdiv">
+                    <img src="/web/imgs/buttons/purple.svg" alt="purple" class="answer-icon-svg" />
+                    <span class="color-square" style="background: var(--col-purple)"></span>
+                    <span class="span1" id="purple"></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button class="button1" onclick="gotoUri('/topic/overview')">Zurück</button>
+</div>
+<script>
+    // Pass topic_versions and id to JS
+    window.topic_versions = {{ topic_versions | tojson }};
+    window.topic_id = "{{ id }}";
+</script>
+{% endblock %}

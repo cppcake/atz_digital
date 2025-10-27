@@ -1,0 +1,205 @@
+{% extends "admin/admin.html" %}
+{% block content %}
+<div class="section">
+    <h2>Debugger</h2>
+    <div class="section2">
+        <h3>Phase</h3>
+        <select class="player_answer" id="phase">
+            <option value=0>0</option>
+            <option value=1">1</option>
+            <option value=2">2</option>
+            <option value=3>3</option>
+        </select>
+    </div>
+    <div class="section2">
+        <h3>Themenname</h3>
+        <input type="text" id="topic_name" placeholder="Themenname">
+    </div>
+    <div class="section2">
+        <h3>Aktuelle Aussage</h3>
+        <input type="text" id="current_statement" placeholder="Aktuelle Aussage">
+    </div>
+    <div class="section2">
+        <h3>Antwortmöglichkeiten</h3>
+        <p><small>Antworten können später nicht verändert werden</small></p>
+        <ul id="ol_answers">
+            <li>
+                <input type="text" id="green" placeholder="Grüne Antwort">
+            </li>
+            <li>
+                <input type="text" id="yellow" placeholder="Gelbe Antwort">
+            </li>
+            <li>
+                <input type="text" id="red" placeholder="Rote Antwort">
+            </li>
+            <li>
+                <input type="text" id="blue" placeholder="Blaue Antwort">
+            </li>
+            <li>
+                <input type="text" id="purple" placeholder="Lila Antwort">
+            </li>
+        </ul>
+    </div>
+    <div class="section2">
+        <h3>Spieler</h3>
+        <table id="players_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Antwort</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="players_body">
+            </tbody>
+        </table>
+        <button onclick="addPlayerRow()">Spieler hinzufügen</button>
+    </div>
+    <div class="section2">
+        <h3>Tools</h3>
+        <label>
+            <span>Anzahl Spieler:</span>
+            <select id="random_player_count" style="width:4em;">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        </label>
+        <button class="btn" onclick="fillRandomData()">Zufällige Daten einfügen</button>
+    </div>
+    <button class="btn_create" onclick="sendDebugJSON()">Debug-JSON senden</button>
+    <pre id="debug_json" style="margin-top:1em; background:#f8f8f8; border:1px solid #ddd;"></pre>
+    <pre id="debug_response" style="margin-top:1em;"></pre>
+</div>
+<script>
+    function addPlayerRow() {
+        const tbody = document.getElementById('players_body');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><input type="number" class="player_id" placeholder="ID" min="0" max="8"></td>
+            <td><input type="text" class="player_name" placeholder="Name"></td>
+            <td>
+                <select class="player_answer">
+                    <option value="">Keine</option>
+                    <option value="green">Grün</option>
+                    <option value="yellow">Gelb</option>
+                    <option value="red">Rot</option>
+                    <option value="blue">Blau</option>
+                    <option value="purple">Purple</option>
+                </select>
+            </td>
+            <td><button onclick="this.parentElement.parentElement.remove()">Entfernen</button></td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    function sendDebugJSON() {
+        const phase = parseInt(document.getElementById('phase').value, 10) || 0;
+        const topicName = document.getElementById('topic_name').value;
+        const currentStatement = document.getElementById('current_statement').value;
+        const green = document.getElementById('green').value;
+        const yellow = document.getElementById('yellow').value;
+        const red = document.getElementById('red').value;
+        const blue = document.getElementById('blue').value;
+        const purple = document.getElementById('purple').value;
+        const players = [];
+        document.querySelectorAll('#players_body tr').forEach(row => {
+            const id = parseInt(row.querySelector('.player_id').value, 10) || null;
+            const name = row.querySelector('.player_name').value;
+            const answer = row.querySelector('.player_answer').value || null;
+            players.push([id, name, answer]);
+        });
+        const json = {
+            phase: phase,
+            topic: {
+                content: topicName,
+                current_statement: currentStatement,
+                answers: {
+                    green: green,
+                    yellow: yellow,
+                    red: red,
+                    blue: blue,
+                    purple: purple
+                }
+            },
+            players: players
+        };
+        // Print the JSON being sent
+        document.getElementById('debug_json').textContent = JSON.stringify(json, null, 2);
+
+        fetch('/debug', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(json)
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('debug_response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(err => {
+                document.getElementById('debug_response').textContent = 'Fehler: ' + err;
+            });
+    }
+
+    function fillRandomData() {
+        // Random data pools
+        const topics = [
+            { name: "Klimawandel", statements: ["Die Erde erwärmt sich schneller als erwartet.", "CO2-Ausstoß muss reduziert werden.", "Erneuerbare Energien sind die Zukunft."] },
+            { name: "Künstliche Intelligenz", statements: ["KI wird viele Jobs verändern.", "Ethik in der KI ist wichtig.", "KI kann den Alltag erleichtern."] },
+            { name: "Ernährung", statements: ["Vegetarische Ernährung ist gesund.", "Zucker sollte reduziert werden.", "Bio-Produkte sind besser für die Umwelt."] },
+            { name: "Sport", statements: ["Regelmäßige Bewegung hält fit.", "Teamsport fördert soziale Kompetenzen.", "Sport ist gut für die mentale Gesundheit."] },
+            { name: "Bildung", statements: ["Digitale Bildung wird immer wichtiger.", "Lehrer brauchen mehr Unterstützung.", "Schulen sollten moderner werden."] }
+        ];
+        const answersPool = [
+            "Stimme voll zu", "Stimme teilweise zu", "Neutral", "Stimme nicht zu", "Keine Meinung", "Kommt drauf an", "Unwichtig", "Sehr wichtig"
+        ];
+        const names = [
+            "Anna", "Ben", "Clara", "David", "Elena", "Felix", "Greta", "Hassan", "Isabel", "Jonas", "Klara", "Lukas", "Mia", "Noah", "Olga", "Paul", "Quirin", "Rosa", "Sven", "Tina"
+        ];
+        const answerColors = ["green", "yellow", "red", "blue", "purple"];
+
+        // Random topic and statement
+        const topic = topics[Math.floor(Math.random() * topics.length)];
+        document.getElementById('topic_name').value = topic.name;
+        document.getElementById('current_statement').value = topic.statements[Math.floor(Math.random() * topic.statements.length)];
+
+        // Random answers (some may be empty)
+        answerColors.forEach(color => {
+            document.getElementById(color).value = (Math.random() < 0.7) ? answersPool[Math.floor(Math.random() * answersPool.length)] : "";
+        });
+
+        // Random players
+        const tbody = document.getElementById('players_body');
+        tbody.innerHTML = ""; // Clear existing
+        // Use user-selected player count, fallback to random if invalid
+        let playerCount = parseInt(document.getElementById('random_player_count')?.value, 10);
+        if (isNaN(playerCount) || playerCount < 0 || playerCount > 8) {
+            playerCount = Math.floor(Math.random() * 9); // 0-8
+        }
+        let usedIds = [];
+        for (let i = 0; i < playerCount; i++) {
+            addPlayerRow();
+            const row = tbody.lastElementChild;
+            // Unique random ID 0-8
+            let id;
+            do {
+                id = Math.floor(Math.random() * 9);
+            } while (usedIds.includes(id));
+            usedIds.push(id);
+            row.querySelector('.player_id').value = id;
+            row.querySelector('.player_name').value = names[Math.floor(Math.random() * names.length)];
+            // Random answer or none
+            const select = row.querySelector('.player_answer');
+            const possibleAnswers = ["", ...answerColors];
+            select.value = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)];
+        }
+    }
+</script>
+{% endblock %}
